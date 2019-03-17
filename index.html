@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link href="https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou" rel="stylesheet">
+  <title></title>
+  <style type="text/css">
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background: #182C61;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'ZCOOL QingKe HuangYou', cursive;
+    }
+
+    .row {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .row-v {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      align-content: center;
+      justify-content: center;
+    }
+
+    #game {
+      height: 100%;
+      position: relative;
+    }
+
+    #score-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: #FFF;
+      padding: 1vw;
+    }
+
+    .score-item {
+      width: 4vw;
+      height: 4vw;
+      font-size: 1.6vw;
+      border-width: 4px;
+      border-style: solid;
+      border-color: #999999;
+      border-radius: 100%;
+      text-align: center;
+      background: #333;
+      margin: 0 0.5vw;
+    }
+
+    .score-item.dead {
+      /*opacity: 0.8;*/
+      background: #900e0e;
+
+      /*color: #ED4C67 !important;*/
+    }
+
+    canvas {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="game" class="row-v">
+  </div>
+  <div id="score-container" class="row"></div>
+
+  <script src="//www.einstein-js.com/api/einstein-1.0.js"></script>
+  <script type="text/javascript" src="libs/pixi5.min.js"></script>
+  <script type="text/javascript" src="libs/utils.js"></script>
+  <!-- Einstein -->
+  <script type="text/javascript" src="models/planet_game_object.js"></script>
+  <script type="text/javascript" src="models/player_game_object.js"></script>
+  <script type="text/javascript" src="renderers/einstein_game_scene_renderer.js"></script>
+  <script type="text/javascript" src="scenes/einstein_game_scene.js"></script>
+  <script type="text/javascript" src="index.js"></script>
+</body>
+</html>
