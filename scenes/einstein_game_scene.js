@@ -15,7 +15,7 @@ class EinsteinGameScene extends Einstein.Scene {
     };
     this.is_running = true;
     this.start_planet = null;
-    console.log(args);
+
     this.players_map = args.players_map || {};
     this.player_objects = {};
     this.planets_map = {};
@@ -49,7 +49,6 @@ class EinsteinGameScene extends Einstein.Scene {
     });
 
     player.setParent(this.start_planet.id);
-    console.log(this.start_planet)
     this.player_objects[player_index] = player;
   }
 

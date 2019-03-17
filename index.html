@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="styles/grid.css">
   <style type="text/css">
     html, body {
       overflow: hidden;
@@ -94,32 +95,26 @@
       margin: auto;
     }
 
-    .about {
+    .footer {
       position: absolute;
       right: 1rem;
       bottom: 1rem;
       color: #829cb7;
     }
 
-/*    @media only screen and (orientation:portrait){
-      #iframe {
-        height: 100vw;
-        -webkit-transform: rotate(90deg);
-        -moz-transform: rotate(90deg);
-        -o-transform: rotate(90deg);
-        -ms-transform: rotate(90deg);
-        transform: rotate(90deg);
-      }
+    #loading {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition-property: opacity;
+      transition-duration: 0.5s;
+      transition-delay: 0.5s;
+      background-image: linear-gradient( 109.6deg, rgba(36,45,57,1) 11.2%, rgba(16,37,60,1) 51.2%, rgba(0,0,0,1) 98.6% );
     }
-    @media only screen and (orientation:landscape){
-      #iframe {
-         -webkit-transform: rotate(0deg);
-         -moz-transform: rotate(0deg);
-         -o-transform: rotate(0deg);
-         -ms-transform: rotate(0deg);
-         transform: rotate(0deg);
-      }
-    }*/
   </style>
 </head>
 <body>
@@ -143,12 +138,16 @@
       Connect
     </div>
 
-    <div class="about text-right">
+    <div class="footer text-right">
       About the game
     </div>
   </div>
 
   <iframe id="iframe" src=""></iframe>
+
+  <div id="loading" class="row-v j-center">
+    Connecting ...
+  </div>
 
   <script type="text/javascript" src="libs/utils.js"></script>
   <script type="text/javascript">
@@ -159,6 +158,7 @@
     var user_id = localStorage.getItem("user_id") || Utils.randomId();
 
     var iframe = document.getElementById("iframe");
+    var loading_ele = document.getElementById("loading");
     var content = document.getElementById("content");
     var session_id_ele = document.getElementById("session_id");
     var username_ele = document.getElementById("username");
@@ -177,7 +177,18 @@
       }
     }
 
+    function showLoader() {
+      loading_ele.style.display = "flex";
+      loading_ele.style.opacity = 1;
+    }
+
+    function hideLoader() {
+      loading_ele.style.opacity = 0;
+      loading_ele.style.display = "none";
+    }
+
     function onConnect() {
+      showLoader();
       var hash_params = "";
       session_id = document.getElementById("session_id").value.trim();
       username = document.getElementById("username").value.trim();
@@ -188,6 +199,11 @@
         localStorage.setItem("user_id", user_id);
         // room-id, user-id, username, avatar-url
         hash_params = [session_id, user_id, username].join(",");
+
+        iframe.onload = function () {
+          hideLoader();
+        };
+
         // Wait so the link can be copied
         iframe.src = BASE_GAME_URL + hash_params;
         iframe.style.display = "block";

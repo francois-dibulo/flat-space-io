@@ -51,7 +51,7 @@ class EinsteinGameSceneRenderer extends Einstein.Renderer {
   }
 
   renderScore() {
-    var players = this.scene.players_map;
+    var players = this.scene.player_objects;
     var children = this.score_container_ele.children;
     for (var player_index in players) {
       var player = players[player_index];
