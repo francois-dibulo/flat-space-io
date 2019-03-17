@@ -40,6 +40,7 @@ class EinsteinLobbySceneRenderer extends Einstein.Renderer {
     for (var id in players) {
       var item = $(".players-item-tmpl").clone();
       var player = players[id];
+      if (!player.is_active) continue;
       item.removeClass("hidden").removeClass("players-item-tmpl");
 
       item.find(".players-item-name").html(player.name);
