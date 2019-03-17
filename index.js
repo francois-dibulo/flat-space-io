@@ -28,8 +28,9 @@ function connectToServers() {
     var name = hash_params[2];
 
     game = new Einstein.Game({
+      "EinsteinLobbyScene": "EinsteinLobbySceneRenderer",
       "EinsteinGameScene": "EinsteinGameSceneRenderer",
-    }, "EinsteinGameScene");
+    }, "EinsteinLobbyScene");
 
     game.connect(room_id, user_id, { name: name });
 

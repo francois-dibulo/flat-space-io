@@ -2,36 +2,65 @@
 <html>
 <head>
   <title>flat-space.io</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400" rel="stylesheet">
   <style type="text/css">
     html, body {
       overflow: hidden;
       height: 100%;
       margin: 0;
       padding: 0;
+      color: #FFF;
+      font-size: 16px;
+      font-family: 'Quicksand', sans-serif;
+      background-image: linear-gradient( 109.6deg,  rgba(36,45,57,1) 11.2%, rgba(16,37,60,1) 51.2%, rgba(0,0,0,1) 98.6% );
     }
 
     input {
       width: 100%;
-      padding: 2vw;
-      background-color: #b0ace2;
-      border-radius: 8px;
+      font-family: 'Quicksand', sans-serif;
       font-size: 2rem;
-      border: 4px solid #7d79ad;
+      font-weight: 300;
+      color: #2581de;
+      background-color: transparent;
+      border: 0;
+      border-radius: 0;
+      border-bottom: 1px solid #2581de;
+      outline: none;
+      padding: 0.5rem;
       margin-top: 0.5rem;
-      color: #3c3771;
     }
 
-    h3 {
-      font-size: 1.5rem;
-      margin: 2rem 0 0 0;
+    .input-info {
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+      color: #829cb7;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin: 0;
+      color: #03efff;
+    }
+
+    .text-center {
+      text-align: center;
     }
 
     .hidden {
       display: none;
     }
 
+    .space-md {
+      height: 5vh;
+    }
+
     #btn_connect {
-      margin-top: 4rem;
+
     }
 
     #iframe {
@@ -39,6 +68,25 @@
       height: 100%;
       width: 100%;
       border: 0;
+    }
+
+    .btn {
+      font-family: 'Quicksand', sans-serif;
+      margin: auto;
+      width: 100%;
+      border-radius: 40px;
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: 1.5rem;
+      background: #ff0070;
+      color: #FFF;
+      cursor: pointer;
+    }
+
+    #content {
+      width: 90%;
+      max-width: 480px;
+      margin: auto;
     }
 
 /*    @media only screen and (orientation:portrait){
@@ -65,18 +113,23 @@
 <body>
 
   <div id="content" class="container col-90">
-      <h3>Room-ID:</h3>
-      To play together, enter the same Room-ID
-      <input type="text" id="session_id" placeholder="E.g. 'myroom'">
+    <div class="space-md"></div>
+    <h1 class="text-center">FlatSpace.io</h1>
 
-      <h3>Your name:</h3>
-      <input type="text" id="username">
+    <div class="space-md"></div>
+    <div class="space-md"></div>
 
-      <input type="text" id="copy" class="hidden">
+    <input type="text" id="session_id" placeholder="room name">
+    <div class="input-info">To play together, enter the same room-name</div>
 
-      <div id="btn_connect" class="btn action">
-        Connect
-      </div>
+    <div class="space-md"></div>
+    <input type="text" id="username" placeholder="username">
+
+    <div class="space-md"></div>
+    <div class="space-md"></div>
+    <div id="btn_connect" class="btn action">
+      Connect
+    </div>
   </div>
 
   <iframe id="iframe" src=""></iframe>

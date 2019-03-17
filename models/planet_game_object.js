@@ -5,7 +5,7 @@ class PlanetGameObject extends Einstein.GameObject {
     this.is_active = args.is_active || false;
     this.x = 100;
     this.y = 50;
-    this.dx = -1;
+    this.dx = -1.5;
     this.dy = 0;
     this.radius = 15;
 
