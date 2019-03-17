@@ -7,8 +7,9 @@ class EinsteinGameSceneRenderer extends Einstein.Renderer {
   }
 
   getDownEvent() {
-      return this.touch_enabled ? 'touchstart' : 'mousedown';
-    }
+    var touch_enabled = "ontouchstart" in document.createElement("div");
+    return touch_enabled ? 'touchstart' : 'mousedown';
+  }
 
   onShow() {
     this.initPixi();
@@ -19,6 +20,7 @@ class EinsteinGameSceneRenderer extends Einstein.Renderer {
     this.setScoreContainerTop();
 
     this.pixi_app.view.addEventListener(this.getDownEvent(), function() {
+      console.log("jump");
       this.game.addInput("Jump");
     }.bind(this));
 
