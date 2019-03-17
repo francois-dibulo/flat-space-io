@@ -13,6 +13,9 @@ class EinsteinLobbySceneRenderer extends Einstein.Renderer {
     var self = this;
     $("#lobby-container").fadeIn(1000);
 
+    console.log(this);
+    $(".room-name-value").html(FlatSpace.room_id);
+
     $(".radio-container").on(this.getDownEvent(), function (ele) {
       var $ele = $(this);
       if (self.scene.current_seconds < 5) {

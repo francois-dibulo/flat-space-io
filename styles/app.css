@@ -24,6 +24,10 @@ h2 {
   box-sizing: border-box;
 }
 
+.hidden {
+  display: none;
+}
+
 .row {
   width: 100%;
   display: flex;
