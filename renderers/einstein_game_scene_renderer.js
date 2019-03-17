@@ -6,6 +6,10 @@ class EinsteinGameSceneRenderer extends Einstein.Renderer {
     this.graphics = null;
   }
 
+  getDownEvent() {
+      return this.touch_enabled ? 'touchstart' : 'mousedown';
+    }
+
   onShow() {
     this.initPixi();
     this.game_container_ele = document.getElementById("game");
@@ -14,7 +18,7 @@ class EinsteinGameSceneRenderer extends Einstein.Renderer {
     this.score_container_ele.innerHTML = "";
     this.setScoreContainerTop();
 
-    this.game_container_ele.addEventListener("click", function() {
+    this.game_container_ele.addEventListener(this.getDownEvent(), function() {
       this.game.addInput("Jump");
     }.bind(this));
 

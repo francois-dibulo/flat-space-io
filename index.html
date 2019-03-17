@@ -1,94 +1,137 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <link href="https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou" rel="stylesheet">
-  <title></title>
+  <title>flat-space.io</title>
   <style type="text/css">
     html, body {
+      overflow: hidden;
+      height: 100%;
       margin: 0;
       padding: 0;
-      height: 100%;
-      overflow: hidden;
-      background: #182C61;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'ZCOOL QingKe HuangYou', cursive;
-    }
-
-    .row {
+    input {
       width: 100%;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
+      padding: 2vw;
+      background-color: #b0ace2;
+      border-radius: 8px;
+      font-size: 2rem;
+      border: 4px solid #7d79ad;
+      margin-top: 0.5rem;
+      color: #3c3771;
     }
 
-    .row-v {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      align-content: center;
-      justify-content: center;
+    h3 {
+      font-size: 1.5rem;
+      margin: 2rem 0 0 0;
     }
 
-    #game {
+    .hidden {
+      display: none;
+    }
+
+    #btn_connect {
+      margin-top: 4rem;
+    }
+
+    #iframe {
+      display: none;
       height: 100%;
-      position: relative;
-    }
-
-    #score-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      color: #FFF;
-      padding: 1vw;
-    }
-
-    .score-item {
-      width: 4vw;
-      height: 4vw;
-      font-size: 1.6vw;
-      border-width: 4px;
-      border-style: solid;
-      border-color: #999999;
-      border-radius: 100%;
-      text-align: center;
-      background: #333;
-      margin: 0 0.5vw;
-    }
-
-    .score-item.dead {
-      /*opacity: 0.8;*/
-      background: #900e0e;
-
-      /*color: #ED4C67 !important;*/
-    }
-
-    canvas {
       width: 100%;
+      border: 0;
+    }
+
+    @media only screen and (orientation:portrait){
+      #iframe {
+        height: 100vw;
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        transform: rotate(90deg);
+      }
+    }
+    @media only screen and (orientation:landscape){
+      #iframe {
+         -webkit-transform: rotate(0deg);
+         -moz-transform: rotate(0deg);
+         -o-transform: rotate(0deg);
+         -ms-transform: rotate(0deg);
+         transform: rotate(0deg);
+      }
     }
   </style>
 </head>
 <body>
 
-  <div id="game" class="row-v">
-  </div>
-  <div id="score-container" class="row"></div>
+  <div id="content" class="container col-90">
+      <h3>Room-ID:</h3>
+      To play together, enter the same Room-ID
+      <input type="text" id="session_id" placeholder="E.g. 'myroom'">
 
-  <script src="//www.einstein-js.com/api/einstein-1.0.js"></script>
-  <script type="text/javascript" src="libs/pixi5.min.js"></script>
+      <h3>Your name:</h3>
+      <input type="text" id="username">
+
+      <input type="text" id="copy" class="hidden">
+
+      <div id="btn_connect" class="btn action">
+        Connect
+      </div>
+  </div>
+
+  <iframe id="iframe" src=""></iframe>
+
   <script type="text/javascript" src="libs/utils.js"></script>
-  <!-- Einstein -->
-  <script type="text/javascript" src="models/planet_game_object.js"></script>
-  <script type="text/javascript" src="models/player_game_object.js"></script>
-  <script type="text/javascript" src="renderers/einstein_game_scene_renderer.js"></script>
-  <script type="text/javascript" src="scenes/einstein_game_scene.js"></script>
-  <script type="text/javascript" src="index.js"></script>
+  <script type="text/javascript">
+    const BASE_GAME_URL = "base-game.html#";
+    //
+    var session_id = localStorage.getItem("session_id") || location.hash.slice(1) || null;
+    var username = localStorage.getItem("username");
+    var user_id = localStorage.getItem("user_id") || Utils.randomId();
+
+    var iframe = document.getElementById("iframe");
+    var content = document.getElementById("content");
+    var session_id_ele = document.getElementById("session_id");
+    var username_ele = document.getElementById("username");
+    var btn_connect = document.getElementById("btn_connect");
+
+    function launchIntoFullscreen(element) {
+      element = element || document.documentElement;
+      if(element.requestFullscreen) {
+        element.requestFullscreen();
+      } else if(element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+      } else if(element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+      } else if(element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+      }
+    }
+
+    function onConnect() {
+      var hash_params = "";
+      session_id = document.getElementById("session_id").value.trim();
+      username = document.getElementById("username").value.trim();
+
+      if (username && username.length && session_id && session_id.length) {
+        localStorage.setItem("username", username);
+        localStorage.setItem("session_id", session_id);
+        localStorage.setItem("user_id", user_id);
+        // room-id, user-id, username, avatar-url
+        hash_params = [session_id, user_id, username].join(",");
+        // Wait so the link can be copied
+        iframe.src = BASE_GAME_URL + hash_params;
+        iframe.style.display = "block";
+        content.style.display = "none";
+        launchIntoFullscreen();
+      }
+    }
+
+    btn_connect.addEventListener("click", onConnect);
+    session_id_ele.value = session_id;
+    username_ele.value = username;
+
+  </script>
+
 </body>
 </html>
