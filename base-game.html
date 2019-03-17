@@ -78,6 +78,7 @@
 
     .scene {
       display: none;
+      height: 100%;
     }
 
     .text-center {
@@ -190,6 +191,11 @@
         <div class="radio-indicator-label-false">NOT<br>READY</div>
       </div>
     </div>
+
+    <div  class="tag tag-info">
+      <span class="countdown-seconds">0</span> Seconds
+      <div class="room-name-title">START IN</div>
+    </div>
   </div>
 
   <!-- GAME -->
@@ -209,6 +215,7 @@
   <script type="text/javascript" src="renderers/einstein_lobby_scene_renderer.js"></script>
   <script type="text/javascript" src="renderers/einstein_game_scene_renderer.js"></script>
 
+  <script type="text/javascript" src="scenes/base_scene.js"></script>
   <script type="text/javascript" src="scenes/einstein_lobby_scene.js"></script>
   <script type="text/javascript" src="scenes/einstein_game_scene.js"></script>
   <script type="text/javascript" src="index.js"></script>

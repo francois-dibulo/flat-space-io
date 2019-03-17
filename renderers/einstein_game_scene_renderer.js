@@ -25,6 +25,7 @@ class EinsteinGameSceneRenderer extends Einstein.Renderer {
     }.bind(this));
 
     window.onresize = this.onResize.bind(this);
+    $("#game-container").fadeIn(2000);
   }
 
   onHide() {
