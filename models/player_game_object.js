@@ -15,7 +15,6 @@ class PlayerGameObject extends Einstein.GameObject {
 
     this.parent_planet_id = null;
     this.base_angle = 0;
-    console.log("A", this.is_active)
   }
 
   spawn(x, y, radius, parent) {

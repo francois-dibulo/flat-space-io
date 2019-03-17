@@ -1,6 +1,7 @@
 class EinsteinGameScene extends Einstein.Scene {
 
-  awake() {
+  awake(args) {
+    args = args || {};
     this.config = {
       width: 960,
       height: 540,
@@ -10,12 +11,13 @@ class EinsteinGameScene extends Einstein.Scene {
       planet_radius: [40, 80],
       MAX_PLANET_SPEED: 3,
       child_radius: 20,
-      child_probability: 20,
-      player_colors: [0x25CCF7, 0xFEA47F, 0xEAB543, 0x55E6C1, 0xD6A2E8, 0x3B3B98]
+      child_probability: 20
     };
     this.is_running = true;
     this.start_planet = null;
-    this.players_map = {};
+    console.log(args);
+    this.players_map = args.players_map || {};
+    this.player_objects = {};
     this.planets_map = {};
     this.createPlanetsPool(this.config.planets_pool_num);
     this.createPlanets();
@@ -38,28 +40,29 @@ class EinsteinGameScene extends Einstein.Scene {
   }
 
   createPlayer(player_index) {
+    var player_obj = this.players_map[player_index];
     var player = this.createObject("PlayerGameObject", {
       id: Utils.randomId(),
       is_active: true,
-      color: this.config.player_colors[player_index],
+      color: player_obj.color,
       player_index: player_index
     });
 
     player.setParent(this.start_planet.id);
     console.log(this.start_planet)
-    this.players_map[player_index] = player;
+    this.player_objects[player_index] = player;
   }
 
   resetPlayers(start_planet) {
-    for (var player_index in this.players_map) {
-      var player = this.players_map[player_index];
+    for (var player_index in this.player_objects) {
+      var player = this.player_objects[player_index];
       player.reset();
       player.setParent(start_planet.id);
     }
   }
 
   playerJump(player_index) {
-    this.players_map[player_index].setParent(null);
+    this.player_objects[player_index].setParent(null);
   }
 
   onLeave(player_index) {
@@ -235,8 +238,8 @@ class EinsteinGameScene extends Einstein.Scene {
 
     // Update Players
     var count_dead = 0;
-    for (var player_index in this.players_map) {
-      var player = this.players_map[player_index];
+    for (var player_index in this.player_objects) {
+      var player = this.player_objects[player_index];
 
       if (this.isCircleOutOfWorld(player)) {
         player.release();

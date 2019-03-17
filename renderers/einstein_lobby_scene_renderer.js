@@ -49,6 +49,10 @@ class EinsteinLobbySceneRenderer extends Einstein.Renderer {
         item.addClass("ready");
       }
 
+      item.find(".player-item-ball").css({
+        'background-color': player.color_hex
+      });
+
       item.appendTo(players_container_ele);
     }
   }

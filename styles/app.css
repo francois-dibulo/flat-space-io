@@ -212,3 +212,14 @@ canvas {
 .players-item-container.ready .players-item-state {
   color: green;
 }
+
+.player-item-ball {
+  margin-right: 0.5rem;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  position: relative;
+  top: 2px;
+  border-radius: 100%;
+  background-color: #FFF;
+}

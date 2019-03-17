@@ -29,11 +29,14 @@ class BaseScene extends Einstein.Scene {
   getPlayerMapObject(index, is_active) {
     is_active = is_active === undefined ? true : is_active;
     index = parseInt(index, 10);
+    var color = [0x25CCF7, 0xFEA47F, 0xEAB543, 0x55E6C1, 0xD6A2E8, 0x3B3B98][index];
     var player_data = this.engine.getPlayerData(index);
     return {
       name: player_data.name,
       index: index,
       score: 0,
+      color: color,
+      color_hex: "#" + color.toString(16),
       is_ready: false,
       is_active: is_active,
       // Global won't be resettet after each round
@@ -55,7 +58,6 @@ class BaseScene extends Einstein.Scene {
     } else {
       player.is_active = true;
     }
-    console.log(this.players_map)
   }
 
   removePlayer(player_index) {
