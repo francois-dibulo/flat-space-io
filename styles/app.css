@@ -1,0 +1,210 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background: rgba(16,37,60,1);
+  background-image: linear-gradient( 109.6deg,  rgba(36,45,57,1) 11.2%, rgba(16,37,60,1) 51.2%, rgba(0,0,0,1) 98.6% );
+  font-family: 'Quicksand', cursive;
+  color: #FFFFFF;
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 2rem;
+  margin: 0;
+  color: #03efff;
+}
+
+h2 {
+  margin: 0 0 1.5rem 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.row-v {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+#game {
+  height: 100%;
+  position: relative;
+}
+
+#score-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #FFF;
+  padding: 1vw;
+}
+
+.score-item {
+  width: 4vw;
+  height: 4vw;
+  font-size: 1.6vw;
+  border-width: 4px;
+  border-style: solid;
+  border-color: #999999;
+  border-radius: 100%;
+  text-align: center;
+  background: #333;
+  margin: 0 0.5vw;
+}
+
+.score-item.dead {
+  /*opacity: 0.8;*/
+  background: #900e0e;
+
+  /*color: #ED4C67 !important;*/
+}
+
+.scene {
+  display: none;
+  height: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.content {
+  width: 90%;
+  max-width: 480px;
+  margin: auto;
+}
+
+canvas {
+  width: 100%;
+}
+
+.space-md {
+  height: 5vh;
+}
+
+.tag {
+  font-family: 'Quicksand', sans-serif;
+  margin: auto;
+  width: 100%;
+  border-radius: 40px;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  font-size: 1.5rem;
+  color: #FFF;
+}
+
+.tag-btn {
+  background: #ff0070;
+}
+
+.tag-info {
+  /*background: rgba(0, 132, 255, 0.2196078431372549);*/
+  border: 2px solid #88abcb;
+}
+
+.room-name-title {
+  font-size: 0.8rem;
+  color: #7da1c5;
+}
+
+.radio-container {
+  width: 100px;
+  height: 50px;
+  position: relative;
+
+}
+
+.radio-container.false {
+  background: #e91e63;
+}
+
+.radio-container.true {
+  background: #4caf50;
+}
+
+.radio-indicator {
+  position: absolute;
+  border-radius: 100%;
+  height: 50px;
+  width: 50px;
+  background: #F6F6F6;
+  top: 0;
+  left: 0;
+  transition-property: left;
+  transition-duration: 0.2s;
+  font-size: 0.6rem;
+  color: #000;
+}
+
+.false .radio-indicator {
+  left: 0%;
+}
+
+.true .radio-indicator {
+  left: 50px;
+}
+
+.radio-indicator-label-true, .radio-indicator-label-false {
+  display: none;
+}
+
+.true .radio-indicator-label-true {
+  display: block;
+  color: #4caf50;
+}
+
+.false .radio-indicator-label-false {
+  display: block;
+  color: #e91e63;
+}
+
+.countdown-container {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #1f3042;
+  background-image: linear-gradient( 109.6deg,  rgba(36,45,57,1) 11.2%, rgba(16,37,60,1) 51.2%, rgba(0,0,0,1) 98.6% );
+}
+
+.countdown-row-v {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.countdown-seconds {
+  font-size: 8rem;
+}
+
+.countdown-seconds-label {
+  font-size: 4rem;
+}
+
+.players-item-container {
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #303f65;
+}
+
+.players-item-container.ready .players-item-state {
+  color: green;
+}

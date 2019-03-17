@@ -4,174 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400" rel="stylesheet">
-  <title></title>
-  <style type="text/css">
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow: hidden;
-      background: rgba(16,37,60,1);
-      background-image: linear-gradient( 109.6deg,  rgba(36,45,57,1) 11.2%, rgba(16,37,60,1) 51.2%, rgba(0,0,0,1) 98.6% );
-      font-family: 'Quicksand', cursive;
-      color: #FFFFFF;
-      font-size: 16px;
-    }
-
-    h1 {
-      font-size: 2rem;
-      margin: 0;
-      color: #03efff;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    .row {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-    }
-
-    .row-v {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      align-content: center;
-      justify-content: center;
-    }
-
-    #game {
-      height: 100%;
-      position: relative;
-    }
-
-    #score-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      color: #FFF;
-      padding: 1vw;
-    }
-
-    .score-item {
-      width: 4vw;
-      height: 4vw;
-      font-size: 1.6vw;
-      border-width: 4px;
-      border-style: solid;
-      border-color: #999999;
-      border-radius: 100%;
-      text-align: center;
-      background: #333;
-      margin: 0 0.5vw;
-    }
-
-    .score-item.dead {
-      /*opacity: 0.8;*/
-      background: #900e0e;
-
-      /*color: #ED4C67 !important;*/
-    }
-
-    .scene {
-      display: none;
-      height: 100%;
-    }
-
-    .text-center {
-      text-align: center;
-    }
-
-    .content {
-      width: 90%;
-      max-width: 480px;
-      margin: auto;
-    }
-
-    canvas {
-      width: 100%;
-    }
-
-    .space-md {
-      height: 5vh;
-    }
-
-    .tag {
-      font-family: 'Quicksand', sans-serif;
-      margin: auto;
-      width: 100%;
-      border-radius: 40px;
-      text-align: center;
-      padding: 1.5rem 1rem;
-      font-size: 1.5rem;
-      background: #ff0070;
-      color: #FFF;
-    }
-
-    .tag-info {
-      background: rgba(0, 132, 255, 0.2196078431372549)
-    }
-
-    .room-name-title {
-      font-size: 0.8rem;
-      color: #7da1c5;
-    }
-
-    .radio-container {
-      width: 100px;
-      height: 50px;
-      position: relative;
-
-    }
-
-    .radio-container.false {
-      background: #e91e63;
-    }
-
-    .radio-container.true {
-      background: #4caf50;
-    }
-
-    .radio-indicator {
-      position: absolute;
-      border-radius: 100%;
-      height: 50px;
-      width: 50px;
-      background: #F6F6F6;
-      top: 0;
-      left: 0;
-      transition-property: left;
-      transition-duration: 0.2s;
-      font-size: 0.6rem;
-      color: #000;
-    }
-
-    .false .radio-indicator {
-      left: 0%;
-    }
-
-    .true .radio-indicator {
-      left: 50px;
-    }
-
-    .radio-indicator-label-true, .radio-indicator-label-false {
-      display: none;
-    }
-
-    .true .radio-indicator-label-true {
-      display: block;
-      color: #4caf50;
-    }
-
-    .false .radio-indicator-label-false {
-      display: block;
-      color: #e91e63;
-    }
-
-  </style>
+  <title>FlatSpace.io</title>
+  <link rel="stylesheet" type="text/css" href="styles/grid.css">
+  <link rel="stylesheet" type="text/css" href="styles/app.css">
 </head>
 <body>
 
@@ -185,23 +20,38 @@
       <div class="room-name-title">ROOM NAME</div>
     </div>
     <div class="space-md"></div>
-    <div id="btn_ready" class="tag radio-container false">
+    <div id="btn_ready" class="tag tag-btn radio-container false">
       <div class="radio-indicator row-v">
         <div class="radio-indicator-label-true">READY</div>
         <div class="radio-indicator-label-false">NOT<br>READY</div>
       </div>
     </div>
 
-    <div  class="tag tag-info">
-      <span class="countdown-seconds">0</span> Seconds
-      <div class="room-name-title">START IN</div>
+    <div class="space-md"></div>
+    <h2 class="text-center">CONNECTED PLAYERS</h2>
+    <div id="players-container">
     </div>
+
+    <div id="countdown-container" class="countdown-container">
+      <div class="countdown-row-v">
+        <div class="room-name-title">GAME STARTS IN</div>
+        <div class="countdown-seconds">0</div>
+        <div class="countdown-seconds-label">SECONDS</div>
+      </div>
+    </div>
+
   </div>
 
   <!-- GAME -->
   <div id="game-container" class="scene">
     <div id="game" class="row-v"></div>
     <div id="score-container" class="row"></div>
+  </div>
+
+  <!-- TEMPLATES -->
+  <div class="players-item-tmpl players-item-container hidden row">
+    <div class="players-item-name col-70"></div>
+    <div class="players-item-state col-30">NOT READY</div>
   </div>
 
   <script src="//code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>

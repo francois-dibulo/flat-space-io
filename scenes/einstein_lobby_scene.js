@@ -3,9 +3,13 @@ class EinsteinLobbyScene extends BaseScene {
   awake(args) {
     args = args || {};
     this.players_map = args.players_map || {};
-    this.current_seconds = 4;
+    this.current_seconds = 5;
     this.addInputListener("OnReady", "onPlayerReady");
     this.addInputListener("StartGame", "startGame");
+  }
+
+  update() {
+    this.engine.freeze();
   }
 
   onPlayerReady(player_index, state) {
