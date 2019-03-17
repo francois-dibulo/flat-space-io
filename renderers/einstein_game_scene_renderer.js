@@ -18,7 +18,7 @@ class EinsteinGameSceneRenderer extends Einstein.Renderer {
     this.score_container_ele.innerHTML = "";
     this.setScoreContainerTop();
 
-    this.game_container_ele.addEventListener(this.getDownEvent(), function() {
+    this.pixi_app.view.addEventListener(this.getDownEvent(), function() {
       this.game.addInput("Jump");
     }.bind(this));
 
