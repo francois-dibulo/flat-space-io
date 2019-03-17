@@ -113,3 +113,18 @@ Utils.angleReflect = function(incidenceAngle, surfaceAngle) {
   var a = surfaceAngle * 2 - incidenceAngle;
   return a >= 360 ? a - 360 : a < 0 ? a + 360 : a;
 };
+
+Utils.isMobile = function() {
+  if (navigator.userAgent.match(/Android/i)
+  || navigator.userAgent.match(/webOS/i)
+  || navigator.userAgent.match(/iPhone/i)
+  || navigator.userAgent.match(/iPod/i)
+  || navigator.userAgent.match(/BlackBerry/i)
+  || navigator.userAgent.match(/Windows Phone/i)
+  ){
+     return true;
+   }
+  else {
+     return false;
+   }
+};

@@ -51,6 +51,10 @@
       text-align: center;
     }
 
+    .text-right {
+      text-align: right;
+    }
+
     .hidden {
       display: none;
     }
@@ -87,6 +91,13 @@
       width: 90%;
       max-width: 480px;
       margin: auto;
+    }
+
+    .about {
+      position: absolute;
+      right: 1rem;
+      bottom: 1rem;
+      color: #829cb7;
     }
 
 /*    @media only screen and (orientation:portrait){
@@ -129,6 +140,10 @@
     <div class="space-md"></div>
     <div id="btn_connect" class="btn action">
       Connect
+    </div>
+
+    <div class="about text-right">
+      About the game
     </div>
   </div>
 
@@ -176,7 +191,9 @@
         iframe.src = BASE_GAME_URL + hash_params;
         iframe.style.display = "block";
         content.style.display = "none";
-        launchIntoFullscreen();
+        if (Utils.isMobile()) {
+          launchIntoFullscreen();
+        }
       }
     }
 
