@@ -29,7 +29,10 @@
       border-bottom: 1px solid #2581de;
       outline: none;
       padding: 0.5rem;
-      margin-top: 0.5rem;
+    }
+
+    input.error {
+      border-bottom: 1px solid #b11a55;
     }
 
     .input-info {
@@ -43,7 +46,7 @@
     }
 
     h1 {
-      font-size: 2rem;
+      font-size: 3rem;
       margin: 0;
       color: #03efff;
     }
@@ -121,9 +124,9 @@
 
   <div id="content" class="container col-90">
     <div class="space-md"></div>
+    <div class="space-md"></div>
     <h1 class="text-center">FlatSpace.io</h1>
 
-    <div class="space-md"></div>
     <div class="space-md"></div>
 
     <input type="text" id="session_id" placeholder="room name">
@@ -132,7 +135,6 @@
     <div class="space-md"></div>
     <input type="text" id="username" placeholder="username">
 
-    <div class="space-md"></div>
     <div class="space-md"></div>
     <div id="btn_connect" class="btn action">
       Connect
@@ -187,11 +189,37 @@
       loading_ele.style.display = "none";
     }
 
+    function allowRoomName(room_name) {
+      var format = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+      if (room_name) {
+        return !(format.test(room_name));
+      }
+      return false;
+    }
+
     function onConnect() {
-      showLoader();
       var hash_params = "";
-      session_id = document.getElementById("session_id").value.trim();
-      username = document.getElementById("username").value.trim();
+      session_id = session_id_ele.value.trim();
+      username = username_ele.value.trim();
+
+      session_id_ele.classList.remove("error");
+      username_ele.classList.remove("error");
+
+      if (!allowRoomName(session_id)) {
+        alert("Sorry - no empty, special characters or whitespaces allowed in the room name! :)");
+        session_id_ele.focus();
+        session_id_ele.classList.add("error");
+        return;
+      }
+
+      if (!username.length) {
+        alert("Give yourself a name - the username can't be empty!");
+        username_ele.focus();
+        username_ele.classList.add("error");
+        return;
+      }
+
+      showLoader();
 
       if (username && username.length && session_id && session_id.length) {
         localStorage.setItem("username", username);
