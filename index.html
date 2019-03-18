@@ -31,6 +31,10 @@
       padding: 0.5rem;
     }
 
+    button {
+      border: 0;
+    }
+
     input.error {
       border-bottom: 1px solid #b11a55;
     }
@@ -127,18 +131,19 @@
     <div class="space-md"></div>
     <h1 class="text-center">FlatSpace.io</h1>
 
-    <div class="space-md"></div>
+    <form id="connect-form">
+      <div class="space-md"></div>
+      <input type="text" id="username" placeholder="username">
 
-    <input type="text" id="session_id" placeholder="room name">
-    <div class="input-info">To play together, enter the same room-name</div>
+      <div class="space-md"></div>
+      <input type="text" id="session_id" placeholder="room name (optional)">
+      <div class="input-info">To play together, enter the same room-name</div>
 
-    <div class="space-md"></div>
-    <input type="text" id="username" placeholder="username">
-
-    <div class="space-md"></div>
-    <div id="btn_connect" class="btn action">
-      Connect
-    </div>
+      <div class="space-md"></div>
+      <button id="btn_connect" class="btn action" type="submit">
+        Connect
+      </button>
+    </form>
 
     <div class="footer text-center">
       info@flatspace.io
@@ -155,13 +160,14 @@
   <script type="text/javascript">
     const BASE_GAME_URL = "base-game.html#";
     //
-    var session_id = localStorage.getItem("session_id") || location.hash.slice(1) || null;
+    var session_id = location.hash.slice(1) || localStorage.getItem("session_id") || null;
     var username = localStorage.getItem("username");
     var user_id = localStorage.getItem("user_id") || Utils.randomId();
 
     var iframe = document.getElementById("iframe");
     var loading_ele = document.getElementById("loading");
     var content = document.getElementById("content");
+    var form_ele = document.getElementById("connect-form")
     var session_id_ele = document.getElementById("session_id");
     var username_ele = document.getElementById("username");
     var btn_connect = document.getElementById("btn_connect");
@@ -205,6 +211,10 @@
       session_id_ele.classList.remove("error");
       username_ele.classList.remove("error");
 
+      if (!session_id.length) {
+        session_id = Utils.randomId();
+      }
+
       if (!allowRoomName(session_id)) {
         alert("Sorry - no empty, special characters or whitespaces allowed in the room name! :)");
         session_id_ele.focus();
@@ -242,7 +252,10 @@
       }
     }
 
-    btn_connect.addEventListener("click", onConnect);
+    form_ele.addEventListener("submit", function(e) {
+      e.preventDefault();
+      onConnect();
+    });
     session_id_ele.value = session_id;
     username_ele.value = username;
   </script>
