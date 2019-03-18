@@ -25,6 +25,7 @@ input {
 
 button {
   border: 0;
+  cursor: pointer;
 }
 
 input.error {
