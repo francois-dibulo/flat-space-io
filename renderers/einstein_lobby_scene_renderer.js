@@ -13,7 +13,6 @@ class EinsteinLobbySceneRenderer extends Einstein.Renderer {
     var self = this;
     $("#lobby-container").fadeIn(1000);
 
-    console.log(this);
     $(".room-name-value").html(FlatSpace.room_id);
 
     $(".radio-container").on(this.getDownEvent(), function (ele) {
@@ -23,6 +22,12 @@ class EinsteinLobbySceneRenderer extends Einstein.Renderer {
       }
       $ele.toggleClass("false").toggleClass("true");
       self.game.addInput("OnReady", $ele.hasClass(true));
+    });
+
+    $(".btn-exit").on(this.getDownEvent(), function() {
+      window.parent.postMessage({
+        action: "exit"
+      }, "*");
     });
   }
 

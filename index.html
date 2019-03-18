@@ -1,128 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>flat-space.io</title>
+  <title>flatspace.io</title>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="Multiplayer game" />
   <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="styles/grid.css">
-  <style type="text/css">
-    html, body {
-      overflow: hidden;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      color: #FFF;
-      font-size: 16px;
-      font-family: 'Quicksand', sans-serif;
-      background-image: linear-gradient( 109.6deg,  rgba(36,45,57,1) 11.2%, rgba(16,37,60,1) 51.2%, rgba(0,0,0,1) 98.6% );
-    }
-
-    input {
-      width: 100%;
-      font-family: 'Quicksand', sans-serif;
-      font-size: 2rem;
-      font-weight: 300;
-      color: #2581de;
-      background-color: transparent;
-      border: 0;
-      border-radius: 0;
-      border-bottom: 1px solid #2581de;
-      outline: none;
-      padding: 0.5rem;
-    }
-
-    button {
-      border: 0;
-    }
-
-    input.error {
-      border-bottom: 1px solid #b11a55;
-    }
-
-    .input-info {
-      font-size: 0.8rem;
-      margin-top: 0.5rem;
-      color: #829cb7;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    h1 {
-      font-size: 3rem;
-      margin: 0;
-      color: #03efff;
-    }
-
-    .text-center {
-      text-align: center;
-    }
-
-    .text-right {
-      text-align: right;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .space-md {
-      height: 5vh;
-    }
-
-    #btn_connect {
-
-    }
-
-    #iframe {
-      display: none;
-      height: 100%;
-      width: 100%;
-      border: 0;
-    }
-
-    .btn {
-      font-family: 'Quicksand', sans-serif;
-      margin: auto;
-      width: 100%;
-      border-radius: 40px;
-      text-align: center;
-      padding: 1.5rem 1rem;
-      font-size: 1.5rem;
-      background: #ff0070;
-      color: #FFF;
-      cursor: pointer;
-    }
-
-    #content {
-      width: 90%;
-      max-width: 480px;
-      margin: auto;
-    }
-
-    .footer {
-      width: 100%;
-      position: absolute;
-      left: 0;
-      bottom: 1rem;
-      color: #829cb7;
-    }
-
-    #loading {
-      display: none;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      transition-property: opacity;
-      transition-duration: 0.5s;
-      transition-delay: 0.5s;
-      background-image: linear-gradient( 109.6deg, rgba(36,45,57,1) 11.2%, rgba(16,37,60,1) 51.2%, rgba(0,0,0,1) 98.6% );
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="styles/index.css">
 </head>
 <body>
 
@@ -252,10 +137,24 @@
       }
     }
 
+    function onExit() {
+      iframe.src = "";
+      iframe.style.display = "none";
+      content.style.display = "block";
+    }
+
     form_ele.addEventListener("submit", function(e) {
       e.preventDefault();
       onConnect();
     });
+
+    window.addEventListener("message", function(event) {
+      var data = event.data;
+      if (data.action === "exit") {
+        onExit();
+      }
+    });
+
     session_id_ele.value = session_id;
     username_ele.value = username;
   </script>
