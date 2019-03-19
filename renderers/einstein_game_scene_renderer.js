@@ -42,8 +42,8 @@ class EinsteinGameSceneRenderer extends Einstein.Renderer {
 
   initPixi() {
     this.pixi_app = new PIXI.Application({
-      width: 960,
-      height: 540,
+      width: FlatSpace.Width,
+      height: FlatSpace.Height,
       antialias: true
     });
     document.getElementById("game").appendChild(this.pixi_app.view);

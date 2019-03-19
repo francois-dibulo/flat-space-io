@@ -3,8 +3,8 @@ class EinsteinGameScene extends Einstein.Scene {
   awake(args) {
     args = args || {};
     this.config = {
-      width: 960,
-      height: 540,
+      width: FlatSpace.Width,
+      height: FlatSpace.Height,
       //
       planets_pool_num: 20,
       player_radius: 8,
@@ -128,11 +128,11 @@ class EinsteinGameScene extends Einstein.Scene {
     }
     var avail_radius = this.config.planet_radius;
     var bbox = this.getBBox();
-    var gap_x_max = Math.round(bbox.right / 3);
-    var gap_y = this.config.player_radius * 3;
+    var gap_y_max = Math.round(bbox.bottom / 3);
+    var gap_x = this.config.player_radius * 3;
     var radius = Utils.random(avail_radius[0], avail_radius[1]);
-    var x = last_circle.x + (radius * 2) + Utils.random(100, gap_x_max);
-    var y = Utils.random(radius + gap_y, bbox.bottom - radius - gap_y);
+    var x = Utils.random(radius + gap_x, bbox.right - radius - gap_x);
+    var y = last_circle.y - (radius * 2) - Utils.random(100, gap_y_max);
     var circle = this.getFreeObject(PlanetGameObject, x, y);
     if (circle) {
       circle.spawn(x, y, radius);
@@ -153,12 +153,12 @@ class EinsteinGameScene extends Einstein.Scene {
   }
 
   getLastPlanet() {
-    var last_x = null;
+    var last_y = null;
     var last_planet = null;
     for (var planet_id in this.planets_map) {
       var planet = this.planets_map[planet_id];
-      if (!last_x || (planet.x > last_x)) {
-        last_x = planet.x + planet.radius;
+      if (!last_y || (planet.y < last_y)) {
+        last_y = planet.y + planet.radius;
         last_planet = planet;
       }
     }
@@ -186,7 +186,7 @@ class EinsteinGameScene extends Einstein.Scene {
     this.is_running = false;
     var bbox = this.getBBox();
     this.start_planet = this.getLastPlanet();
-    this.start_planet.spawn(bbox.center_x + this.start_planet.x, bbox.center_y, 60);
+    this.start_planet.spawn(bbox.center_x, this.start_planet.y, 60);
     this.start_planet.color = 0x00ff00;
     this.setPlanetsSpeed(20);
   }
@@ -194,7 +194,7 @@ class EinsteinGameScene extends Einstein.Scene {
   updateReset() {
     var bbox = this.getBBox();
     if (this.start_planet) {
-      if (this.start_planet.x <= bbox.center_x) {
+      if (this.start_planet.y <= bbox.center_y) {
         console.log("reset");
         this.setPlanetsSpeed(1);
         this.resetPlayers(this.start_planet);
@@ -210,7 +210,7 @@ class EinsteinGameScene extends Einstein.Scene {
     for (var planet_id in this.planets_map) {
       var planet = this.planets_map[planet_id];
       var speed_val = speed;
-      planet.dx = -speed_val;
+      planet.dy = speed_val;
     }
   }
 
@@ -220,7 +220,7 @@ class EinsteinGameScene extends Einstein.Scene {
     for (var planet_id in this.planets_map) {
       var planet = this.planets_map[planet_id];
       if (!planet.is_active) continue;
-      if (planet.x + planet.radius < 0) {
+      if (planet.y - planet.radius > this.config.height) {
         if (!planet.parent) {
           planet.release();
           if (this.is_running) {

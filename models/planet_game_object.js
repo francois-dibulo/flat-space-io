@@ -5,8 +5,8 @@ class PlanetGameObject extends Einstein.GameObject {
     this.is_active = args.is_active || false;
     this.x = 100;
     this.y = 50;
-    this.dx = -1.5;
-    this.dy = 0;
+    this.dx = 0;
+    this.dy = 1.5;
     this.radius = 15;
 
     this.parent_planet = null;
@@ -57,7 +57,7 @@ class PlanetGameObject extends Einstein.GameObject {
   update() {
     if (!this.is_active) return;
     if (!this.parent_planet) {
-      this.x += this.dx;
+      this.y += this.dy;
     } else {
       var pos = Utils.getPosOnRadius(this.parent_planet, this.parent_distance, this.base_angle);
       this.base_angle += 0.1 * this.rotate_direction * this.angle_speed;
