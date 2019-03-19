@@ -57,6 +57,8 @@ class EinsteinGameScene extends Einstein.Scene {
       var player = this.player_objects[player_index];
       player.reset();
       player.setParent(start_planet.id);
+      player.spawn(this.parent_planet.x, this.parent_planet.y);
+      this.parent_planet = start_planet;
     }
   }
 
@@ -145,7 +147,6 @@ class EinsteinGameScene extends Einstein.Scene {
         } else {
           console.warn("We run out of child planets");
         }
-        //circle.planet_children.push(child_circle);
       }
     }
 
@@ -157,7 +158,7 @@ class EinsteinGameScene extends Einstein.Scene {
     var last_planet = null;
     for (var planet_id in this.planets_map) {
       var planet = this.planets_map[planet_id];
-      if (!last_y || (planet.y < last_y)) {
+      if (planet.is_active && last_y == null || (planet.y < last_y)) {
         last_y = planet.y + planet.radius;
         last_planet = planet;
       }
@@ -192,14 +193,29 @@ class EinsteinGameScene extends Einstein.Scene {
   }
 
   updateReset() {
+    var self = this;
     var bbox = this.getBBox();
+
+    // Deactivate all planets, which are out of the viewport
+    for (var planet_id in this.planets_map) {
+      var planet = this.planets_map[planet_id];
+      if (!planet.is_active) continue;
+      if (planet.id === this.start_planet.id) continue;
+      if (planet.y + planet.radius < 0 ||
+        planet.y - planet.radius > this.config.height) {
+        planet.release();
+      }
+    }
+
     if (this.start_planet) {
-      if (this.start_planet.y <= bbox.center_y) {
-        console.log("reset");
+      if (this.start_planet.y >= bbox.center_y) {
         this.setPlanetsSpeed(1);
         this.resetPlayers(this.start_planet);
+        var last_planet = this.start_planet;
         for (var i = 0; i < 8; i++) {
-          this.appendCircle();
+          (function() {
+            last_planet = self.appendCircle(last_planet);
+          })(last_planet);
         }
         this.is_running = true;
       }
@@ -216,6 +232,11 @@ class EinsteinGameScene extends Einstein.Scene {
 
   update() {
 
+    if (!this.is_running) {
+      this.updateReset();
+      return;
+    }
+
     // Update planets
     for (var planet_id in this.planets_map) {
       var planet = this.planets_map[planet_id];
@@ -228,11 +249,6 @@ class EinsteinGameScene extends Einstein.Scene {
           }
         }
       }
-    }
-
-    if (!this.is_running) {
-      this.updateReset();
-      return;
     }
 
     // Update Players

@@ -21,7 +21,7 @@ class PlayerGameObject extends Einstein.GameObject {
     this.is_active = true;
     this.x = x;
     this.y = y;
-    this.radius = radius;
+    this.radius = radius || 8;
   }
 
   setParent(planet_id) {
