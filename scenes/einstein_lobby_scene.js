@@ -12,6 +12,11 @@ class EinsteinLobbyScene extends BaseScene {
     this.engine.freeze();
   }
 
+  onLeave(player_index) {
+    this.removePlayer(player_index);
+    this.checkAllReady();
+  }
+
   onPlayerReady(player_index, state) {
     var player = this.getPlayer(player_index);
     if (player) {
