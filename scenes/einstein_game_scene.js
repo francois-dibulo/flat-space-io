@@ -57,7 +57,7 @@ class EinsteinGameScene extends Einstein.Scene {
       var player = this.player_objects[player_index];
       player.reset();
       player.setParent(start_planet.id);
-      player.spawn(this.parent_planet.x, this.parent_planet.y);
+      player.spawn(start_planet.x, start_planet.y);
       this.parent_planet = start_planet;
     }
   }
