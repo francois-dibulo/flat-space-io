@@ -48,6 +48,7 @@ class EinsteinGameScene extends Einstein.Scene {
       player_index: player_index
     });
 
+    player.base_angle = (30 * (Math.PI / 180)) * player_index;
     player.setParent(this.start_planet.id);
     this.player_objects[player_index] = player;
   }
@@ -56,6 +57,7 @@ class EinsteinGameScene extends Einstein.Scene {
     for (var player_index in this.player_objects) {
       var player = this.player_objects[player_index];
       player.reset();
+      player.base_angle = (30 * (Math.PI / 180)) * player_index;
       player.setParent(start_planet.id);
       player.spawn(start_planet.x, start_planet.y);
       this.parent_planet = start_planet;
