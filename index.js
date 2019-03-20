@@ -2,8 +2,8 @@ var engine_game = null;
 var phaser_game = null;
 var FlatSpace = {
   room_id: null,
-  Width: 540,
-  Height: 960
+  Width: 472,
+  Height: 840
 };
 
 (function() {

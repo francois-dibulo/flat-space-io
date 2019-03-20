@@ -10,11 +10,12 @@ class PlanetGameObject extends Einstein.GameObject {
     this.radius = 15;
 
     this.parent_planet = null;
+    this.move_ellipse = false;
     this.base_angle = 0;
     this.parent_distance = this.radius * 2;
     this.rotate_direction = Utils.random(0, 100) >= 50 ? -1 : 1;
 
-    this.angle_speed = 1;
+    this.angle_speed = 4;
     this.init_color = 0x00FF00;
     this.color = 0x00FF00;
     this.setValues();
@@ -42,6 +43,7 @@ class PlanetGameObject extends Einstein.GameObject {
       this.parent_planet = parent;
       var min_distance = this.parent_planet.radius + this.radius + 20;
       this.parent_distance = Utils.random(min_distance + 5, min_distance + 60);
+      this.move_ellipse = Utils.random(0, 100) > 60;
     } else {
       this.setValues();
       this.parent_planet = null;
@@ -59,7 +61,8 @@ class PlanetGameObject extends Einstein.GameObject {
     if (!this.parent_planet) {
       this.y += this.dy;
     } else {
-      var pos = Utils.getPosOnRadius(this.parent_planet, this.parent_distance, this.base_angle);
+      var pos = Utils.getPosOnRadius(this.parent_planet, this.parent_distance, this.base_angle, this.move_ellipse);
+      var angle_speed = !this.move_ellipse ? this.angle_speed : 1;
       this.base_angle += 0.1 * this.rotate_direction * this.angle_speed;
       this.x = pos.x;
       this.y = pos.y

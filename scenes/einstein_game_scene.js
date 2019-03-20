@@ -7,6 +7,7 @@ class EinsteinGameScene extends Einstein.Scene {
       height: FlatSpace.Height,
       //
       planets_pool_num: 20,
+      planets_initial_num: 8,
       player_radius: 8,
       planet_radius: [40, 80],
       MAX_PLANET_SPEED: 3,
@@ -112,11 +113,11 @@ class EinsteinGameScene extends Einstein.Scene {
     this.start_planet = this.getFreeObject(PlanetGameObject, start_x, start_y);
     if (this.start_planet) {
       this.start_planet.spawn(start_x, start_y, base_radius);
+      this.start_planet.angle_speed = 0.4;
     }
 
-    var num = 8;
     var last_circle = this.start_planet;
-    for (var i = 0; i < num; i++) {
+    for (var i = 0; i < this.config.planets_initial_num; i++) {
       (function() {
         last_circle = self.appendCircle(last_circle);
       })(last_circle);
@@ -188,8 +189,10 @@ class EinsteinGameScene extends Einstein.Scene {
     console.log("All dead");
     this.is_running = false;
     var bbox = this.getBBox();
+    var avail_radius = this.config.planet_radius;
+    var base_radius = Utils.random(avail_radius[0], avail_radius[1]);
     this.start_planet = this.getLastPlanet();
-    this.start_planet.spawn(bbox.center_x, this.start_planet.y, 60);
+    this.start_planet.spawn(bbox.center_x, this.start_planet.y, base_radius);
     this.start_planet.color = 0x00ff00;
     this.setPlanetsSpeed(20);
   }
@@ -210,7 +213,7 @@ class EinsteinGameScene extends Einstein.Scene {
     }
 
     if (this.start_planet) {
-      if (this.start_planet.y >= bbox.center_y) {
+      if (this.start_planet.y + this.start_planet.radius >= bbox.center_y) {
         this.setPlanetsSpeed(1);
         this.resetPlayers(this.start_planet);
         var last_planet = this.start_planet;

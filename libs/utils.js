@@ -102,9 +102,10 @@ Utils.preloadAssets = function(base_path, files_map, cb) {
   }
 };
 
-Utils.getPosOnRadius = function(point, radius, angle) {
+Utils.getPosOnRadius = function(point, radius, angle, is_ellipse) {
+  radius_x = is_ellipse ? radius * 2 : radius;
   return {
-    x: point.x + Math.cos(angle) * radius,
+    x: point.x + Math.cos(angle) * radius_x,
     y: point.y + Math.sin(angle) * radius
   };
 };
