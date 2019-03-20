@@ -4,6 +4,7 @@ class EinsteinGameSceneRenderer extends Einstein.Renderer {
     super(args);
     this.pixi_app = null;
     this.graphics = null;
+    this.stars = [];
   }
 
   getDownEvent() {
@@ -44,10 +45,48 @@ class EinsteinGameSceneRenderer extends Einstein.Renderer {
     this.pixi_app = new PIXI.Application({
       width: FlatSpace.Width,
       height: FlatSpace.Height,
-      antialias: true
+      antialias: true,
+      backgroundColor: 0x02023a
     });
     document.getElementById("game").appendChild(this.pixi_app.view);
     this.graphics = new PIXI.Graphics();
+    this.createBackgroundStars();
+  }
+
+  createBackgroundStars() {
+    var bbox = {
+      left: 10,
+      top: 10,
+      right: FlatSpace.Width,
+      bottom: FlatSpace.Height
+    };
+    var graphics = new PIXI.Graphics();
+    for (var i = 0; i < 40; i++) {
+      var x = Utils.random(bbox.left, bbox.right);
+      var y = Utils.random(bbox.top, bbox.bottom);
+      var radius = Utils.random(1, 5);
+      graphics.beginFill(0x2a3a83);
+      graphics.drawCircle(x, y, radius);
+      graphics.endFill();
+    }
+    this.pixi_app.stage.addChild(graphics);
+
+    // Create moving background stars
+    for (var i = 0; i < 10; i++) {
+      var graphics = new PIXI.Graphics();
+      var x = Utils.random(bbox.left, bbox.right);
+      var y = Utils.random(bbox.top, bbox.bottom);
+      var radius = Utils.random(1, 5);
+      graphics.beginFill(0x2a3a83);
+      graphics.drawCircle(0, 0, radius);
+      graphics.endFill();
+      graphics.position.x = x;
+      graphics.position.y = y;
+      graphics.speed_y = Utils.random(1, 10) / 10;
+      this.stars.push(graphics);
+      this.pixi_app.stage.addChild(graphics);
+    }
+
   }
 
   renderScore() {
@@ -79,6 +118,18 @@ class EinsteinGameSceneRenderer extends Einstein.Renderer {
   }
 
   render() {
+
+    // Render background stars
+    for (var i = 0; i < this.stars.length; i++) {
+      var star = this.stars[i];
+      star.position.y += star.speed_y;
+      if (star.position.y - 10 > FlatSpace.Height) {
+        star.position.y = -10;
+        star.position.x = Utils.random(10, FlatSpace.Width - 10);
+      }
+    }
+
+    // Render Game Objects
     var graphics = this.graphics;
     graphics.clear();
 
