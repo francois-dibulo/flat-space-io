@@ -5,6 +5,7 @@ class EinsteinGameSceneRenderer extends Einstein.Renderer {
     this.pixi_app = null;
     this.graphics = null;
     this.stars = [];
+    this.planets_sprites_map = {};
   }
 
   getDownEvent() {
@@ -63,9 +64,16 @@ class EinsteinGameSceneRenderer extends Einstein.Renderer {
     for (var i = 0; i < 40; i++) {
       var x = Utils.random(bbox.left, bbox.right);
       var y = Utils.random(bbox.top, bbox.bottom);
-      var radius = Utils.random(1, 5);
       graphics.beginFill(0x2a3a83);
-      graphics.drawCircle(x, y, radius);
+      // Dot
+      if (i < 30) {
+        var radius = Utils.random(1, 5);
+        graphics.drawCircle(x, y, radius);
+      // Star
+      } else {
+        var radius = Utils.random(6, 10);
+        graphics.drawStar(x, y, 4, radius, radius / 2);
+      }
       graphics.endFill();
     }
     this.pixi_app.stage.addChild(graphics);
@@ -84,6 +92,20 @@ class EinsteinGameSceneRenderer extends Einstein.Renderer {
       graphics.speed_y = Utils.random(1, 10) / 10;
       this.stars.push(graphics);
       this.pixi_app.stage.addChild(graphics);
+    }
+
+
+    var objects = this.scene.objects;
+    for (var i = 0; i < objects.length; i++) {
+      var einstein_obj = objects[i];
+      if (einstein_obj.entity_type === "PlanetGameObject") {
+        var sprite = new PIXI.Sprite.from('assets/1.png');
+        this.planets_sprites_map[einstein_obj.id] = sprite;
+        sprite.visible = einstein_obj.is_active;
+        sprite.anchor.x = 0.5;
+        sprite.anchor.y = 0.5;
+        this.pixi_app.stage.addChild(sprite);
+      }
     }
 
   }
@@ -133,17 +155,34 @@ class EinsteinGameSceneRenderer extends Einstein.Renderer {
     graphics.clear();
 
     var objects = this.scene.objects;
-
     for (var i = 0; i < objects.length; i++) {
       var einstein_obj = objects[i];
 
-      if (einstein_obj.is_active) {
-        graphics.beginFill(einstein_obj.color);
-        graphics.drawCircle(einstein_obj.x, einstein_obj.y, einstein_obj.radius);
-        graphics.endFill();
+      // Player
+      if (einstein_obj.entity_type === "PlayerGameObject") {
+        if (einstein_obj.is_active) {
+          graphics.beginFill(einstein_obj.color);
+          graphics.drawCircle(einstein_obj.x, einstein_obj.y, einstein_obj.radius);
+          graphics.endFill();
+        }
+      }
+
+      // Planet
+      if (einstein_obj.entity_type === "PlanetGameObject") {
+        var sprite = this.planets_sprites_map[einstein_obj.id];
+        if (sprite) {
+          sprite.visible = einstein_obj.is_active;
+          if (einstein_obj.is_active) {
+            sprite.x = einstein_obj.x;
+            sprite.y = einstein_obj.y;
+            sprite.width = einstein_obj.radius * 2;
+            sprite.height = einstein_obj.radius * 2;
+          }
+        }
       }
 
     }
+
     this.pixi_app.stage.addChild(graphics);
     this.renderScore();
   }

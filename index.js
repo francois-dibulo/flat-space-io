@@ -1,3 +1,9 @@
+/*
+  Music:
+    https://audiojungle.net/search/deep%20space?utf8=%E2%9C%93
+    https://audiojungle.net/item/urban-hunt-movie-sequence/222746?s_rank=10
+*/
+
 var engine_game = null;
 var phaser_game = null;
 var FlatSpace = {
@@ -35,6 +41,9 @@ var FlatSpace = {
   };
 
   setSize();
-  engine_game = connectToServers();
+  PIXI.Loader.shared.add('planet', 'assets/1.png').load((loader, resources) => {
+    console.log(resources);
+    engine_game = connectToServers();
+  });
 
 }());

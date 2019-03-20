@@ -20,6 +20,7 @@ class EinsteinGameScene extends Einstein.Scene {
     this.players_map = args.players_map || {};
     this.player_objects = {};
     this.planets_map = {};
+
     this.createPlanetsPool(this.config.planets_pool_num);
     this.createPlanets();
     this.addInputListener("Jump", "playerJump");
